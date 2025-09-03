@@ -36,8 +36,11 @@ export default function TimerCounter() {
       </div>
 
       <div className="timer-buttons">
-        <Button onClick={startTimer}>スタート</Button>
-        <Button onClick={stopTimer}>ストップ</Button>
+        {isRunning ? (
+          <Button onClick={stopTimer}>ストップ</Button>
+        ) : (
+          <Button onClick={startTimer}>スタート</Button>
+        )}
       </div>
     </>
   )
