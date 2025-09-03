@@ -1,0 +1,45 @@
+.timer-container {
+  display: flex;
+  height: 100vh;
+}
+
+.timer-title {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.timer-time {
+  font-size: 64px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.timer-buttons button {
+  font-size: 20px;
+  padding: 10px 20px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.timer-left,
+.timer-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  box-sizing: border-box;
+}
+
+/* 左側：タイマー */
+.timer-left {
+  background-color: #f5f5f5;
+  flex-direction: column;
+}
+
+/* 右側：名言表示 */
+.timer-right {
+  background-color: #fff;
+  flex-direction: column;
+  border-left: 2px solid #e0e0e0;
+}

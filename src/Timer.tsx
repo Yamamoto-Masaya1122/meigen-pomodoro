@@ -1,11 +1,16 @@
-import { useState } from "react";
+import "./Timer.css";
+import TimerCounter from "./TimerCounter";
+import MeigenText from "./MeigenText";
 
 export default function Timer() {
-  const [time, setTime] = useState(25);
   return (
-    <>
-      <h1>タイマーページです</h1>
-      <p>{time}</p>
-    </>
-  )
+    <div className="timer-container">
+      <div className="timer-left">
+        <TimerCounter />
+      </div>
+      <div className="timer-right">
+        <MeigenText />
+      </div>
+    </div>
+  );
 }

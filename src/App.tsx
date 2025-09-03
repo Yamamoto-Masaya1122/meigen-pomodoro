@@ -1,9 +1,9 @@
-import Top from "./Top"
+import AppRoutes from './AppRoutes.tsx'
 
 export default function App() {
   return (
     <>
-      <Top />
+      <AppRoutes />
     </>
   )
 }
