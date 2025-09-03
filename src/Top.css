@@ -1,18 +1,30 @@
-.section {
+.container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 200px;
-  flex-direction: column;
+  height: 100vh;
+  background-image: url('/src/assets/top.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-.section h1 {
-  font-size: 40px;
+.container h1 {
+  font-size: 50px;
   font-weight: bold;
   margin-bottom: 70px;
+  color: #fff;
 }
 
-.section button {
+.container p {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 60px;
+  color: #fff;
+}
+
+.container button {
   font-size: 20px;
   font-weight: bold;
   padding: 10px 20px;
