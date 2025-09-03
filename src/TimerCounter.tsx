@@ -3,7 +3,7 @@ import { ProgressCircle, Dialog, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 export default function TimerCounter() {
-  const totalTime = 1 * 60;
+  const totalTime = 25 * 60;
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [isRunning, setIsRunning] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
