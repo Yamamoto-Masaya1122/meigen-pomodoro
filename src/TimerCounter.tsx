@@ -1,27 +1,43 @@
 import { useState, useEffect } from "react";
-import { ProgressCircle, Dialog, Button } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
 import { FaRegStopCircle } from "react-icons/fa";
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { FaRegPauseCircle } from "react-icons/fa";
+import TimerProgress from "@/components/TimerProgress";
+import TimerModal from "@/components/TimerModal";
 
 export default function TimerCounter() {
-  const totalTime = 25 * 60;
-  const [timeLeft, setTimeLeft] = useState(totalTime);
+  const POMO_TIME = 25 * 60; // 25分
+  const REST_TIME = 5 * 60;  // 5分
+
+  const [timer, setTimer] = useState(POMO_TIME);
   const [isRunning, setIsRunning] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const navigate = useNavigate();
+  const [mode, setMode] = useState("pomo"); 
+  const [pomoCount, setPomoCount] = useState(0); 
 
   useEffect(() => {
-    if (!isRunning || timeLeft <= 0) return;
+    if (!isRunning || timer <= 0) return;
 
     const timerId = setInterval(() => {
-      setTimeLeft((prev) => {
+      setTimer((prev) => {
         if (prev <= 1) {
           clearInterval(timerId);
           setIsRunning(false);
-          setIsDialogOpen(true);
+
+          if (mode === "pomo") {
+            // 作業モードが終わったら休憩へ
+            setMode("rest");
+            setTimer(REST_TIME);
+            setIsRunning(true); // 自動で休憩を開始
+            setIsDialogOpen(true); // ダイアログ表示
+            setPomoCount((c) => c + 1); // ポモドーロ数を更新
+          } else {
+            // 休憩が終わったら再び作業へ
+            setMode("pomo");
+            setTimer(POMO_TIME);
+            setIsRunning(true); // 自動で作業を開始
+          }
+
           return 0;
         }
         return prev - 1;
@@ -29,31 +45,25 @@ export default function TimerCounter() {
     }, 1000);
 
     return () => clearInterval(timerId);
-  }, [isRunning, timeLeft]);
+  }, [isRunning, mode]);
 
   const handleStart = () => setIsRunning(true);
   const handleReset = () => {
     setIsRunning(false);
-    setTimeLeft(totalTime);
+    setMode("pomo");
+    setTimer(POMO_TIME);
   };
   const handlePause = () => setIsRunning(false);
 
-  const handleBackToTop = () => {
-    navigate("/");
-  };
+  const minutes = Math.floor(timer / 60);
+  const seconds = timer % 60;
 
-  const minutes = Math.floor(timeLeft / 60);
-  const seconds = timeLeft % 60;
-  const progressValue = ((totalTime - timeLeft) / totalTime) * 100;
+  const totalTime = mode === "pomo" ? POMO_TIME : REST_TIME;
+  const progressValue = ((totalTime - timer) / totalTime) * 100;
 
   return (
     <>
-      <ProgressCircle.Root value={progressValue} size="xl">
-        <ProgressCircle.Circle>
-          <ProgressCircle.Track />
-          <ProgressCircle.Range stroke="cyan.500" />
-        </ProgressCircle.Circle>
-      </ProgressCircle.Root>
+      <TimerProgress progressValue={progressValue} />
       <div className="timer-time">
         {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}
       </div>
@@ -61,36 +71,25 @@ export default function TimerCounter() {
       {isRunning ? (
         <div className="timer-buttons">
           <button onClick={handlePause}>
-            <FaRegPauseCircle style={{ fontSize: "3rem", color: "white" }}/>
+            <FaRegPauseCircle style={{ fontSize: "3rem", color: "white" }} />
           </button>
         </div>
       ) : (
         <div className="timer-buttons">
           <button onClick={handleStart}>
-            <FaRegCirclePlay style={{ fontSize: "3rem", color: "white" }}/>
+            <FaRegCirclePlay style={{ fontSize: "3rem", color: "white" }} />
           </button>
           <button onClick={handleReset}>
-            <FaRegStopCircle style={{ fontSize: "3rem", color: "white" }}/>
+            <FaRegStopCircle style={{ fontSize: "3rem", color: "white" }} />
           </button>
         </div>
       )}
 
-      <Dialog.Root open={isDialogOpen}>
-        <Dialog.Backdrop />
-        <Dialog.Positioner>
-          <Dialog.Content>
-            <Dialog.CloseTrigger />
-            <Dialog.Header>
-              <Dialog.Title>お疲れさまでした。少し休憩しましょう ☕！</Dialog.Title>
-            </Dialog.Header>
-            <Dialog.Footer>
-              <Button colorScheme="cyan" onClick={handleBackToTop}>
-                トップ画面に戻る
-              </Button>
-            </Dialog.Footer>
-          </Dialog.Content>
-        </Dialog.Positioner>
-      </Dialog.Root>
+      {/* <div className="pomo-count">
+        現在 <strong>{pomoCount}</strong> ポモドーロ
+      </div> */}
+
+      <TimerModal isDialogOpen={isDialogOpen} setIsDialogOpen={setIsDialogOpen} />
     </>
   );
 }
