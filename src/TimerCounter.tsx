@@ -13,7 +13,7 @@ export default function TimerCounter() {
   const [isRunning, setIsRunning] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [mode, setMode] = useState("pomo"); 
-  const [pomoCount, setPomoCount] = useState(0); 
+  // const [pomoCount, setPomoCount] = useState(0); 
 
   useEffect(() => {
     if (!isRunning || timer <= 0) return;
@@ -30,7 +30,7 @@ export default function TimerCounter() {
             setTimer(REST_TIME);
             setIsRunning(true); // 自動で休憩を開始
             setIsDialogOpen(true); // ダイアログ表示
-            setPomoCount((c) => c + 1); // ポモドーロ数を更新
+            // setPomoCount((c) => c + 1); // ポモドーロ数を更新
           } else {
             // 休憩が終わったら再び作業へ
             setMode("pomo");
