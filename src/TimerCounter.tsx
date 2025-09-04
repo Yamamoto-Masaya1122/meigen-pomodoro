@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { ProgressCircle, Dialog, Button } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { FaRegStopCircle } from "react-icons/fa";
+import { FaRegCirclePlay } from "react-icons/fa6";
+import { FaRegPauseCircle } from "react-icons/fa";
 
 export default function TimerCounter() {
   const totalTime = 25 * 60;
@@ -53,11 +56,18 @@ export default function TimerCounter() {
 
       {isRunning ? (
         <div className="timer-buttons">
-          <Button onClick={handleStop}>ストップ</Button>
+          <button onClick={handleStop}>
+            <FaRegPauseCircle style={{ fontSize: "3rem", color: "white" }}/>
+          </button>
         </div>
       ) : (
         <div className="timer-buttons">
-          <Button onClick={handleStart}>スタート</Button>
+          <button onClick={handleStart}>
+            <FaRegCirclePlay style={{ fontSize: "3rem", color: "white" }}/>
+          </button>
+          <button onClick={handleStop}>
+            <FaRegStopCircle style={{ fontSize: "3rem", color: "white" }}/>
+          </button>
         </div>
       )}
 
