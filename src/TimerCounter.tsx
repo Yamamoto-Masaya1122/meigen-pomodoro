@@ -32,7 +32,11 @@ export default function TimerCounter() {
   }, [isRunning, timeLeft]);
 
   const handleStart = () => setIsRunning(true);
-  const handleStop = () => setIsRunning(false);
+  const handleReset = () => {
+    setIsRunning(false);
+    setTimeLeft(totalTime);
+  };
+  const handlePause = () => setIsRunning(false);
 
   const handleBackToTop = () => {
     navigate("/");
@@ -56,7 +60,7 @@ export default function TimerCounter() {
 
       {isRunning ? (
         <div className="timer-buttons">
-          <button onClick={handleStop}>
+          <button onClick={handlePause}>
             <FaRegPauseCircle style={{ fontSize: "3rem", color: "white" }}/>
           </button>
         </div>
@@ -65,7 +69,7 @@ export default function TimerCounter() {
           <button onClick={handleStart}>
             <FaRegCirclePlay style={{ fontSize: "3rem", color: "white" }}/>
           </button>
-          <button onClick={handleStop}>
+          <button onClick={handleReset}>
             <FaRegStopCircle style={{ fontSize: "3rem", color: "white" }}/>
           </button>
         </div>
