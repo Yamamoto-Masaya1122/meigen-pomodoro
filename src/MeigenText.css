@@ -1,6 +1,7 @@
 .meigen-text {
   font-size: 28px;
   font-weight: bold;
+  font-family:serif;
 }
 
 .meigen-author {
@@ -8,4 +9,5 @@
   text-align: right;
   font-size: 20px;
   font-weight: bold;
+  font-family:serif;
 }
